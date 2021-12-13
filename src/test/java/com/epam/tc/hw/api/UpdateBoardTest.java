@@ -1,11 +1,11 @@
 package com.epam.tc.hw.api;
 
 import com.epam.tc.hw.api.beans.Board;
-import com.epam.tc.hw.api.beans.Prefs;
 import com.epam.tc.hw.api.core.builders.BoardRequestBuilder;
 import com.epam.tc.hw.api.core.services.ServiceObject;
 import com.epam.tc.hw.api.core.steps.BoardSteps;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -16,8 +16,7 @@ public class UpdateBoardTest {
 
     @BeforeMethod
     public void setUp() {
-        board = BoardSteps.createBoard(new Board().withName("board 3")
-                                                  .withPrefs(new Prefs().withBackground("lime")));
+        board = BoardSteps.createBoard();
     }
 
     @AfterMethod
@@ -27,7 +26,8 @@ public class UpdateBoardTest {
 
     @Test
     public void testUpdateBoard() {
-        String newName = board.getName() + ".1";
+        String newName = RandomStringUtils.randomAlphanumeric(10);
+
         Response updateResponse = new BoardRequestBuilder().setBoardId(board.getId()).setName(newName).buildPut()
                                                            .sendRequest();
         updateResponse.then().assertThat().spec(ServiceObject.okResponseSpec());
