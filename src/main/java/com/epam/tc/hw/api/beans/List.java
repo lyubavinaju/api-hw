@@ -29,22 +29,12 @@ public class List {
         this.id = id;
     }
 
-    public List withId(String id) {
-        this.id = id;
-        return this;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List withName(String name) {
-        this.name = name;
-        return this;
     }
 
     public Boolean getClosed() {
@@ -55,22 +45,12 @@ public class List {
         this.closed = closed;
     }
 
-    public List withClosed(Boolean closed) {
-        this.closed = closed;
-        return this;
-    }
-
     public String getIdBoard() {
         return idBoard;
     }
 
     public void setIdBoard(String idBoard) {
         this.idBoard = idBoard;
-    }
-
-    public List withIdBoard(String idBoard) {
-        this.idBoard = idBoard;
-        return this;
     }
 
     @Override

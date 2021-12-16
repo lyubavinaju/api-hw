@@ -2,7 +2,7 @@ package com.epam.tc.hw.api.properties;
 
 import java.util.ResourceBundle;
 
-public class UserProperties {
+public class TrelloProperties {
     private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("user");
 
     public static String key() {
@@ -11,5 +11,9 @@ public class UserProperties {
 
     public static String token() {
         return resourceBundle.getString("token");
+    }
+
+    public static String baseUrl() {
+        return resourceBundle.getString("trelloUrl");
     }
 }

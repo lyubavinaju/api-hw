@@ -26,11 +26,6 @@ public class Board {
         this.id = id;
     }
 
-    public Board withId(String id) {
-        this.id = id;
-        return this;
-    }
-
     public String getName() {
         return name;
     }
@@ -39,22 +34,12 @@ public class Board {
         this.name = name;
     }
 
-    public Board withName(String name) {
-        this.name = name;
-        return this;
-    }
-
     public Prefs getPrefs() {
         return prefs;
     }
 
     public void setPrefs(Prefs prefs) {
         this.prefs = prefs;
-    }
-
-    public Board withPrefs(Prefs prefs) {
-        this.prefs = prefs;
-        return this;
     }
 
     @Override

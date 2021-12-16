@@ -38,7 +38,6 @@
           <sourceType>json</sourceType>
           <annotationStyle>gson</annotationStyle>
           <addCompileSourceRoot>true</addCompileSourceRoot>
-          <generateBuilders>true</generateBuilders>
         </configuration>
         <executions>
           <execution>
