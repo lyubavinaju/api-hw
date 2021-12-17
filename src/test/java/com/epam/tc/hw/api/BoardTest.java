@@ -11,7 +11,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class UpdateBoardTest {
+public class BoardTest {
     private Board board;
 
     @BeforeMethod
@@ -21,19 +21,29 @@ public class UpdateBoardTest {
 
     @AfterMethod
     public void tearDown() {
-        BoardSteps.deleteBoard(board.getId());
+        if (board != null) {
+            BoardSteps.deleteBoard(board.getId());
+        }
     }
 
     @Test
     public void testUpdateBoard() {
         String newName = RandomStringUtils.randomAlphanumeric(10);
-
         Response updateResponse = new BoardRequestBuilder().setBoardId(board.getId()).setName(newName).buildPut()
                                                            .sendRequest();
         updateResponse.then().assertThat().spec(ServiceObject.okResponseSpec());
-
         Board actualBoard = BoardSteps.getBoard(board.getId());
         Assert.assertEquals(actualBoard.getName(), newName);
         Assert.assertEquals(actualBoard.getPrefs().getBackground(), board.getPrefs().getBackground());
+    }
+
+    @Test
+    public void testDeleteBoard() {
+        String boardId = board.getId();
+        board = null;
+        BoardSteps.deleteBoard(boardId);
+        new BoardRequestBuilder().setBoardId(boardId).buildGet()
+                                 .sendRequest()
+                                 .then().assertThat().spec(ServiceObject.notFoundResponseSpec());
     }
 }

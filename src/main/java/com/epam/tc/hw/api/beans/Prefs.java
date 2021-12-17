@@ -20,11 +20,6 @@ public class Prefs {
         this.background = background;
     }
 
-    public Prefs withBackground(String background) {
-        this.background = background;
-        return this;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

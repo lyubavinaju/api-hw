@@ -17,9 +17,8 @@ public class BoardSteps {
 
     public static Board createBoard() {
         String boardName = RandomStringUtils.randomAlphanumeric(10);
-        Board board = new Board().withName(boardName);
         Response response = new BoardRequestBuilder()
-            .setName(board.getName())
+            .setName(boardName)
             .buildPost()
             .sendRequest();
         response.then().assertThat().spec(ServiceObject.okResponseSpec());

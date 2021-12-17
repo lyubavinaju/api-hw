@@ -1,7 +1,6 @@
 package com.epam.tc.hw.api.core.services.board;
 
 import com.epam.tc.hw.api.core.services.ServiceObject;
-import com.epam.tc.hw.api.endpoints.Endpoints;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import java.util.Map;
@@ -16,6 +15,6 @@ public class DeleteBoardServiceObject extends ServiceObject {
     public Response sendRequest() {
         return RestAssured.given()
                           .spec(requestSpec)
-                          .delete(Endpoints.BOARD_BY_ID);
+                          .delete(BOARD_BY_ID);
     }
 }

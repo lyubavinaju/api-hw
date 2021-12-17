@@ -16,12 +16,15 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class ListTests {
-
     private Board board;
+    private List givenList;
 
     @BeforeMethod
     public void setUp() {
         board = BoardSteps.createBoard();
+        givenList = new List();
+        givenList.setName("list 1");
+        givenList.setIdBoard(board.getId());
     }
 
     @AfterMethod
@@ -45,35 +48,41 @@ public class ListTests {
 
     @Test
     public void testCreateList() {
-
-        List list = new List().withName("list 1").withIdBoard(board.getId());
-
-        String id = createList(list).getId();
-
+        String id = createList(givenList).getId();
         List actualList = getList(id);
-
         assertThat(actualList, allOf(
-            hasProperty("name", equalTo(list.getName())),
-            hasProperty("idBoard", equalTo(list.getIdBoard())),
+            hasProperty("name", equalTo(givenList.getName())),
+            hasProperty("idBoard", equalTo(givenList.getIdBoard())),
             hasProperty("closed", equalTo(false))
         ));
     }
 
     @Test
-    public void testCloseList() {
-        List list = new List().withName("list 1").withIdBoard(board.getId());
-
-        String id = createList(list).getId();
-
+    public void testArchiveList() {
+        String id = createList(givenList).getId();
         new ListRequestBuilder().setId(id).setClosed(true).buildPut()
                                 .sendRequest()
                                 .then().assertThat().spec(ServiceObject.okResponseSpec());
         List actualList = getList(id);
-
         assertThat(actualList, allOf(
-            hasProperty("name", equalTo(list.getName())),
-            hasProperty("idBoard", equalTo(list.getIdBoard())),
+            hasProperty("name", equalTo(givenList.getName())),
+            hasProperty("idBoard", equalTo(givenList.getIdBoard())),
             hasProperty("closed", equalTo(true))
         ));
+    }
+
+    @Test
+    public void testUnarchiveArchivedList() {
+        String id = createList(givenList).getId();
+        new ListRequestBuilder().setId(id).setClosed(true).buildPut()
+                                .sendRequest()
+                                .then().assertThat().spec(ServiceObject.okResponseSpec());
+        List archivedList = getList(id);
+        assertThat(archivedList, hasProperty("closed", equalTo(true)));
+        new ListRequestBuilder().setId(id).setClosed(false).buildPut()
+                                .sendRequest()
+                                .then().assertThat().spec(ServiceObject.okResponseSpec());
+        List unarchivedList = getList(id);
+        assertThat(unarchivedList, hasProperty("closed", equalTo(false)));
     }
 }

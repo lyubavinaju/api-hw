@@ -1,7 +1,6 @@
 package com.epam.tc.hw.api.core.services.board;
 
 import com.epam.tc.hw.api.core.services.ServiceObject;
-import com.epam.tc.hw.api.endpoints.Endpoints;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import java.util.Map;
@@ -16,6 +15,6 @@ public class GetBoardServiceObject extends ServiceObject {
     public Response sendRequest() {
         return RestAssured.given()
                           .spec(requestSpec)
-                          .get(Endpoints.BOARD_BY_ID);
+                          .get(BOARD_BY_ID);
     }
 }
